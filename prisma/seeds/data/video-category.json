@@ -1,0 +1,132 @@
+[
+    {
+        "name": "Music",
+        "description": "Videos related to music and music artists",
+        "title": "Music Category"
+    },
+    {
+        "name": "Sports",
+        "description": "Videos related to sports and athletic events",
+        "title": "Sports Category"
+    },
+    {
+        "name": "Gaming",
+        "description": "Videos related to gaming and video games",
+        "title": "Gaming Category"
+    },
+    {
+        "name": "Movies",
+        "description": "Videos related to movies and movie trailers",
+        "title": "Movies Category"
+    },
+    {
+        "name": "News",
+        "description": "Videos related to news and current events",
+        "title": "News Category"
+    },
+    {
+        "name": "Live",
+        "description": "Videos related to live events",
+        "title": "Live Category"
+    },
+    {
+        "name": "Fashion",
+        "description": "Videos related to fashion and style",
+        "title": "Fashion Category"
+    },
+    {
+        "name": "Learning",
+        "description": "Videos related to learning and education",
+        "title": "Learning Category"
+    },
+    {
+        "name": "Spotlight",
+        "description": "Videos related to spotlight and featured content",
+        "title": "Spotlight Category"
+    },
+    {
+        "name": "360",
+        "description": "Videos related to 360 degree videos",
+        "title": "360 Category"
+    },
+    {
+        "name": "VR",
+        "description": "Videos related to virtual reality",
+        "title": "VR Category"
+    },
+    {
+        "name": "Animals",
+        "description": "Videos related to animals and pets",
+        "title": "Animals Category"
+    },
+    {
+        "name": "Automotive",
+        "description": "Videos related to automotive and vehicles",
+        "title": "Automotive Category"
+    },
+    {
+        "name": "Travel",
+        "description": "Videos related to travel and places",
+        "title": "Travel Category"
+    },
+    {
+        "name": "Science",
+        "description": "Videos related to science and technology",
+        "title": "Science Category"
+    },
+    {
+        "name": "Tech",
+        "description": "Videos related to tech and gadgets",
+        "title": "Tech Category"
+    },
+    {
+        "name": "Food",
+        "description": "Videos related to food and cooking",
+        "title": "Food Category"
+    },
+    {
+        "name": "Vlogging",
+        "description": "Videos related to vlogging and video blogging",
+        "title": "Vlogging Category"
+    },
+    {
+        "name": "Entertainment",
+        "description": "Videos related to entertainment and celebrities",
+        "title": "Entertainment Category"
+    },
+    {
+        "name": "Beauty",
+        "description": "Videos related to beauty and makeup",
+        "title": "Beauty Category"
+    },
+    {
+        "name": "Family",
+        "description": "Videos related to family and parenting",
+        "title": "Family Category"
+    },
+    {
+        "name": "Lifestyle",
+        "description": "Videos related to lifestyle and home",
+        "title": "Lifestyle Category"
+    },
+    {
+        "name": "Business",
+        "description": "Videos related to business and entrepreneurship",
+        "title": "Business Category"
+    },
+    {
+        "name": "Comedy",
+        "description": "Videos related to comedy and funny videos",
+        "title": "Comedy Category"
+    },
+    {
+        "name": "Fitness",
+        "description": "Videos related to fitness and exercise",
+        "title": "Fitness Category"
+    },
+    {
+        "name": "How-to",
+        "description": "Videos related to how-to and DIY",
+        "title": "How-to Category"
+    }
+]

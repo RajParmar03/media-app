@@ -1,0 +1,9 @@
+{
+    "Index": {
+        "title": "Hello world!"
+    },
+    "Pagination": {
+        "previous": "Previous",
+        "next": "Next"
+    }
+}

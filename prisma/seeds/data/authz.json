@@ -1,0 +1,24 @@
+{
+    "roles": [
+        "USER",
+        "MEMBER",
+        "EDITOR",
+        "OWNER",
+        "MODERATOR",
+        "REVIEWER",
+        "GUEST",
+        "ADMIN"
+    ],
+    "permissions": [
+        "create-user",
+        "delete-user",
+        "update-user",
+        "read-user",
+        "invite-user",
+        "update-user-permissions",
+        "upload-file",
+        "delete-file",
+        "update-file",
+        "read-file"
+    ]
+}

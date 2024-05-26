@@ -1,0 +1,425 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+// --------------------------------------------------------------------------------------------- //
+//  Authentication and Authorization                                                             //
+// --------------------------------------------------------------------------------------------- //
+model User {
+  // use nanoid instead of cuid
+  id              String       @id @default(cuid())
+  name            String?
+  auth_session    Session[]
+  // key           Key[]
+  email           String       @unique
+  emailVerified   Boolean      @default(false) @map("email_verified")
+  hashed_password String?      @map("hashed_password")
+  tokens          Token[]
+  roles           Role[]
+  permissions     Permission[]
+  phone           String?
+  avatar          String?
+  darkMode        Boolean      @default(false) @map("dark_mode")
+  language        String       @default("en")
+  country         String?      @default("US")
+  timezone        String?      @default("UTC")
+  currency        String?      @default("USD")
+  city            String?
+  gender          String?
+  dob             DateTime?
+  bio             String?
+  social          Json?        @default("{}")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
+  // soft delete
+  deletedAt DateTime? @map("deleted_at")
+
+  // password_reset_token     Token?  
+  member Member[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// model Key {
+//   id              String  @id @default(cuid())
+//   hashed_password String? @map("hashed_password")
+//   user_id         String  @map("user_id")
+//   user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+//   @@index([user_id])
+// }
+
+enum TokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  // TODO: Add more token types
+  OAuth_ACCESS_TOKEN
+  // REFRESH_TOKEN
+}
+
+model Token {
+  id      String    @id @default(uuid())
+  expires BigInt
+  type    TokenType
+  user_id String    @map("user_id")
+  user    User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  // user_id String
+  // user    User   @relation("user", references: [id], fields: [user_id], onDelete: Cascade)
+}
+
+// might be used for the future
+enum RoleName {
+  // admin, owner, editor, reviewer, guest, etc
+  USER
+  MEMBER
+  EDITOR
+  OWNER
+  MODERATOR
+  REVIEWER
+  GUEST
+  ADMIN
+
+  @@map("role_names")
+}
+
+model Role {
+  name        RoleName     @id
+  label       String?
+  description String?
+  permissions Permission[]
+  users       User[]
+  members     Member[]
+}
+
+model Permission {
+  name   String  @id
+  roles  Role[]
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model CasbinRule {
+  id    Int     @id @default(autoincrement())
+  ptype String
+  v0    String?
+  v1    String?
+  v2    String?
+  v3    String?
+  v4    String?
+  v5    String?
+
+  @@map("casbin_rules")
+}
+
+model Member {
+  id String @id @default(cuid())
+
+  role    Role     @relation(fields: [roleId], references: [name])
+  user    User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  station Station? @relation(references: [id], fields: [stationId], onDelete: Cascade)
+  channel Channel? @relation(references: [id], fields: [channelId], onDelete: Cascade)
+
+  roleId    RoleName @map("role_id")
+  userId    String   @map("user_id")
+  stationId String?  @map("station_id")
+  channelId String?  @map("channel_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  Linked    Linked?  @relation(fields: [linkedId], references: [id])
+  linkedId  String?
+}
+
+model AppSettings {
+  id        String   @id @default(cuid())
+  name      String   @unique // general, security, notification, etc
+  /// [AppSettingsValues]
+  values    Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+// --------------------------------------------------------------------------------------------- //
+//  Channels                                                                                       //
+// --------------------------------------------------------------------------------------------- //
+model Station {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at")
+  members     Member[]
+  channels    Channel[]
+  //media, tags, categories, preferences, 
+}
+
+model Channel {
+  id          String       @id @default(cuid())
+  title       String?
+  description String?
+  avatar      Json?        @default("{}")
+  settings    Json?        @default("{}")
+  station     Station?     @relation(fields: [stationId], references: [id])
+  stationId   String?      @map("station_id")
+  links       Linked[]
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @default(now()) @updatedAt @map("updated_at")
+  // ConnectedChannel ConnectedChannel[]
+  // ConnectedChannel ConnectedChannel[]
+  members     Member[]
+  category    Category?    @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  items       Item[]
+  collections Collection[]
+}
+
+// linked social media channels or account to the channel
+model Linked {
+  id         String     @id @default(cuid())
+  metadata   Json?      @default("{}")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @default(now()) @updatedAt @map("updated_at")
+  members    Member[]
+  /// [ChannelSettings]
+  settings   Json?      @default("{}")
+  // [ChannelPreferences]
+  preference Json?      @default("{}")
+  categories Category[]
+  platform   Platform   @relation(references: [id], fields: [platformId], onDelete: Cascade)
+  platformId String     @map("platform_id")
+  items      Item[]
+  channel    Channel?   @relation(fields: [channelId], references: [id])
+  channelId  String?
+}
+
+model Platform {
+  id          String        @id @default(cuid())
+  code        String        @unique // youtube, facebook, twitter, tiktok, etc
+  abbr        String        @unique // yt, fb, tw, tt, etc
+  label       String?
+  description String?
+  url         String?
+  disabled    Boolean       @default(false)
+  /// [PlatformCredentials]
+  // credentials     Json              @default("[]")
+  settings    Json?         @default("{}") // rules for the platform
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at")
+  categories  Category[]
+  tags        Tag[]
+  /// [PlatformCredentials[]]
+  keys        Json?         @default("[]")
+  PlatfromKey PlatfromKey[]
+  Linked      Linked[]
+}
+
+model PlatfromKey {
+  id         String   @id @default(cuid())
+  eId        String?
+  platformId String   @map("platform_id")
+  platform   Platform @relation(references: [id], fields: [platformId], onDelete: Cascade)
+  values     Json     @default("{}")
+  disabled   Boolean  @default(false)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model PlatformKeySetting {
+  id        String   @id @default(cuid())
+  settings  Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+// --------------------------------------------------------------------------------------------- //
+//  classification                                                                                       //
+// --------------------------------------------------------------------------------------------- //
+
+model Tag {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @default(now()) @updatedAt @map("updated_at")
+  platform    Platform[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  icon        String?
+  image       String?
+  children    Category[] @relation("CategoryToCategory")
+  parent      Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
+  parentId    String?    @map("parent_id")
+
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @default(now()) @updatedAt @map("updated_at")
+  platform  Platform[]
+  channel   Channel[]
+  Linked    Linked?    @relation(fields: [linkedId], references: [id])
+  linkedId  String?
+}
+
+model Preference {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+// content
+// post: text, image, video, audio, link, file, etc
+// tv show: episode, season, series, etc
+// movie: movie, series, etc
+// music: song, album, playlist, etc
+// book: book, chapter, series, etc
+// game: game, level, series, etc
+
+// --------------------------------------------------------------------------------------------- //
+//  Content                                                                                       //
+// --------------------------------------------------------------------------------------------- //
+
+// Content is a generic model that can be used to represent any type of content, like post, tv show, movie, music, audio,  video, etc  
+model Content {
+  id          String    @id @default(cuid())
+  name        String
+  title       String?
+  description String?
+  order       Int?
+  image       Json?     @default("{}") // cover image, thumbnail, etc
+  icon        String?
+  children    Content[] @relation("ContentToContent")
+  parent      Content?  @relation("ContentToContent", fields: [parentId], references: [id])
+  parentId    String?   @map("parent_id")
+
+  items     Item[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([parentId, name])
+}
+
+// content items: post, audio, video, etc
+model Item {
+  id          String           @id @default(cuid())
+  title       String?
+  description String?
+  // url         Json?             @default("[]") // url is within details
+  // thumbnails  Json?             @default("[]") //  thumbnails is within details
+  details     Json?            @default("{}") //
+  contents    Content[]
+  collections CollectionItem[]
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @default(now()) @updatedAt @map("updated_at")
+  Channel     Channel?         @relation(fields: [channelId], references: [id])
+  channelId   String?
+  Linked      Linked?          @relation(fields: [linkedId], references: [id])
+  linkedId    String?
+}
+
+enum CollectionType {
+  SECTION
+  // CATEGORY
+  // TAG
+  POST
+  TV_SHOW
+  MOVIE_SERIES
+  ALBUM
+  PLAYLIST
+  PODCAST
+  BOOK
+  COLLECTION
+}
+
+model Collection {
+  id          String         @id @default(cuid())
+  name        String
+  // slug        String    @unique
+  description String?
+  type        CollectionType @default(POST) @map("type")
+  thumbnails  Json?          @default("{}")
+  children    Collection[]   @relation("CollectionToCollection")
+  parent      Collection?    @relation("CollectionToCollection", fields: [parentId], references: [id])
+  parentId    String?        @map("parent_id")
+
+  items CollectionItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  Channel   Channel? @relation(fields: [channelId], references: [id])
+  channelId String?
+}
+
+// ignore the best practices for now. and use the same table for all content types
+// intermedia table for many to many relationship between collection and item models
+// this tabel is required to maintain the order of items in a collection and any other metadata related to the relationship 
+model CollectionItem {
+  order        Int
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId String     @map("collection_id")
+  item         Item       @relation(fields: [itemId], references: [id])
+  itemId       String     @map("item_id")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @default(now()) @updatedAt @map("updated_at")
+
+  @@id([collectionId, itemId])
+}
+
+// --------------------------------------------------------------------------------------------- //
+//  Task                                                                                       //
+// --------------------------------------------------------------------------------------------- //
+
+enum TaskType {
+  IMPORT
+  PUBLISH
+  SYNC
+  BACKUP
+  CLEANUP
+  DELETE
+}
+
+enum TaskStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  TIMEOUT
+  RETRY
+  PAUSED
+  SCHEDULED
+  DELETED
+  ARCHIVED
+}
+
+model Task {
+  id        String     @id @default(uuid())
+  type      TaskType
+  status    TaskStatus
+  message   String?
+  payload   Json?      @default("{}")
+  output    String?
+  // cron expression
+  schedule  String?
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @default(now()) @updatedAt @map("updated_at")
+}

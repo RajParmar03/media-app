@@ -1,0 +1,90 @@
+[
+    {
+        "code": "youtube",
+        "url": "https://www.youtube.com",
+        "label": "YouTube",
+        "abbr": "YT",
+        "disabled": false,
+        "settings": {}
+    },
+    {
+        "code": "tiktok",
+        "url": "https://www.tiktok.com",
+        "label": "TikTok",
+        "abbr": "TT",
+        "disabled": false
+    },
+    {
+        "code": "facebook",
+        "url": "https://www.facebook.com",
+        "label": "Facebook",
+        "abbr": "FB",
+        "disabled": true
+    },
+    {
+        "code": "twitter",
+        "url": "https://www.twitter.com",
+        "label": "Twitter",
+        "abbr": "TW",
+        "disabled": false
+    },
+    {
+        "code": "instagram",
+        "url": "https://www.instagram.com",
+        "label": "Instagram",
+        "abbr": "IG",
+        "disabled": true
+    },
+    {
+        "code": "linkedin",
+        "url": "https://www.linkedin.com",
+        "label": "LinkedIn",
+        "abbr": "LI",
+        "disabled": true
+    },
+    {
+        "code": "reddit",
+        "url": "https://www.reddit.com",
+        "label": "Reddit",
+        "abbr": "RD"
+    },
+    {
+        "code": "snapchat",
+        "url": "https://www.snapchat.com",
+        "label": "Snapchat",
+        "abbr": "SC",
+        "disabled": false
+    },
+    {
+        "code": "whatsapp",
+        "url": "https://www.whatsapp.com",
+        "label": "WhatsApp",
+        "abbr": "WA",
+        "disabled": false
+    },
+    {
+        "code": "discord",
+        "url": "https://www.discord.com",
+        "label": "Discord",
+        "abbr": "DC"
+    },
+    {
+        "code": "slack",
+        "url": "https://www.slack.com",
+        "label": "Slack",
+        "abbr": "SL"
+    },
+    {
+        "code": "telegram",
+        "url": "https://www.telegram.com",
+        "label": "Telegram",
+        "abbr": "TG",
+        "disabled": true
+    },
+    {
+        "code": "wechat",
+        "url": "https://www.wechat.com",
+        "label": "WeChat",
+        "abbr": "WC"
+    }
+]

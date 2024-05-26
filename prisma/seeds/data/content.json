@@ -1,0 +1,198 @@
+{
+    "videos": {
+        "title": "Videos",
+        "description": "Videos description",
+        "order": 0,
+        "icon": "Video",
+        "children": {
+            "action": {
+                "title": "Action",
+                "description": "Action description",
+                "children": {
+                    "thriller": {
+                        "title": "Thriller",
+                        "description": "Thriller description"
+                    },
+                    "adventure": {
+                        "title": "Adventure",
+                        "description": "Adventure description"
+                    }
+                }
+            },
+            "comedy": {
+                "title": "Comedy",
+                "description": "Comedy description",
+                "children": {
+                    "romantic": {
+                        "title": "Romantic",
+                        "description": "Romantic description"
+                    },
+                    "satire": {
+                        "title": "Satire",
+                        "description": "Satire description"
+                    }
+                }
+            }
+        }
+    },
+    "sounds": {
+        "title": "Sounds",
+        "description": "Sounds description",
+        "order": 1,
+        "icon": "Music2",
+        "children": {
+            "music": {
+                "title": "Music",
+                "description": "Music description"
+            },
+            "ambient": {
+                "title": "Ambient",
+                "description": "Ambient description"
+            }
+        }
+    },
+    "images": {
+        "title": "Images",
+        "description": "Images description",
+        "order": 2,
+        "icon": "Image",
+        "children": {
+            "nature": {
+                "title": "Nature",
+                "description": "Nature description"
+            },
+            "architecture": {
+                "title": "Architecture",
+                "description": "Architecture description"
+            }
+        }
+    },
+    "documents": {
+        "title": "Documents",
+        "description": "Documents description",
+        "order": 3,
+        "icon": "File",
+        "children": {
+            "pdf": {
+                "title": "PDF",
+                "description": "PDF description"
+            },
+            "word": {
+                "title": "Word",
+                "description": "Word description"
+            }
+        }
+    },
+    "footages": {
+        "title": "Footages",
+        "description": "Footages description",
+        "order": 4,
+        "icon": "Clapperboard",
+        "children": {
+            "travel": {
+                "title": "Travel",
+                "description": "Travel description"
+            },
+            "sports": {
+                "title": "Sports",
+                "description": "Sports description"
+            }
+        }
+    },
+    "shots": {
+        "title": "Shots",
+        "description": "Shots description",
+        "order": 5,
+        "icon": "Camera",
+        "children": {
+            "closeup": {
+                "title": "Closeup",
+                "description": "Closeup description"
+            },
+            "wideangle": {
+                "title": "Wide Angle",
+                "description": "Wide Angle description"
+            }
+        }
+    },
+    "reactions": {
+        "title": "Reactions",
+        "description": "Reactions description",
+        "order": 6,
+        "icon": "FlaskRound",
+        "children": {
+            "happy": {
+                "title": "Happy",
+                "description": "Happy description"
+            },
+            "sad": {
+                "title": "Sad",
+                "description": "Sad description"
+            }
+        }
+    },
+    "stickers": {
+        "title": "Stickers",
+        "description": "Stickers description",
+        "order": 7,
+        "icon": "Smile2",
+        "children": {
+            "emoticons": {
+                "title": "Emoticons",
+                "description": "Emoticons description"
+            },
+            "animals": {
+                "title": "Animals",
+                "description": "Animals description"
+            }
+        }
+    },
+    "texts": {
+        "title": "Texts",
+        "description": "Texts description",
+        "order": 8,
+        "icon": "CaseSensitive",
+        "children": {
+            "quotes": {
+                "title": "Quotes",
+                "description": "Quotes description"
+            },
+            "poems": {
+                "title": "Poems",
+                "description": "Poems description"
+            }
+        }
+    },
+    "fonts": {
+        "title": "Fonts",
+        "description": "Fonts description",
+        "order": 9,
+        "icon": "Type",
+        "children": {
+            "serif": {
+                "title": "Serif",
+                "description": "Serif description"
+            },
+            "sansserif": {
+                "title": "Sans Serif",
+                "description": "Sans Serif description"
+            }
+        }
+    },
+    "templates": {
+        "title": "Templates",
+        "description": "Templates description",
+        "order": 10,
+        "icon": "LayoutPanelTop",
+        "children": {
+            "business": {
+                "title": "Business",
+                "description": "Business description"
+            },
+            "wedding": {
+                "title": "Wedding",
+                "description": "Wedding description"
+            }
+        }
+    }
+}
